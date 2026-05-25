@@ -4,7 +4,7 @@
 
 ### Autonomous Recovery Controller for Neural Network Training
 
-_Real-time fault tolerance that monitors, predicts, and recovers from training failures — automatically._
+_Real-time fault tolerance that monitors, predicts, and recovers from training failures - automatically._
 
 <br>
 
@@ -36,9 +36,9 @@ Training neural networks is fragile. A single NaN gradient, an OOM spike, or an 
 
 **ARC eliminates this entirely.** It wraps your training loop with an autonomous controller that:
 
-1. **Monitors** — Tracks multi-signal telemetry (loss trajectory, gradient norms, weight health, optimizer state integrity)
-2. **Predicts** — Uses signal-based classifiers to detect failures before they become irreversible
-3. **Recovers** — Automatically rolls back to the last healthy checkpoint and applies corrective measures
+1. **Monitors** - Tracks multi-signal telemetry (loss trajectory, gradient norms, weight health, optimizer state integrity)
+2. **Predicts** - Uses signal-based classifiers to detect failures before they become irreversible
+3. **Recovers** - Automatically rolls back to the last healthy checkpoint and applies corrective measures
 
 You keep training. ARC keeps it alive.
 
