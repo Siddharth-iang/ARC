@@ -353,6 +353,9 @@ class MetaModelTrainer:
     def load_checkpoint(self, path: str) -> None:
         try:
             checkpoint = torch.load(path, map_location=self.device, weights_only=True)
+        except TypeError:
+            # PyTorch <1.13 doesn't support weights_only; fall back transparently
+            checkpoint = torch.load(path, map_location=self.device)
         except (pickle.UnpicklingError, RuntimeError):
             warnings.warn(
                 f"Loading {path} with weights_only=False. "
