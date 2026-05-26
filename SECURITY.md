@@ -38,10 +38,8 @@ fails — typically because the checkpoint contains optimizer state,
 schedulers, or other non-tensor Python objects — ARC falls back to
 `weights_only=False` after emitting a `UserWarning` of the form:
 
-```
-Loading <path> with weights_only=False. Only do this for checkpoints
-you produced yourself. See SECURITY.md for the checkpoint trust boundary.
-```
+``` Loading <path> with weights_only=False. Only do this for checkpoints
+you produced yourself. See SECURITY.md for the checkpoint trust boundary.```
 
 The fallback is provided for backward compatibility with existing
 checkpoints. **It reintroduces the pickle code-execution risk for the
