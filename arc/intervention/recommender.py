@@ -105,14 +105,30 @@ class EffectivenessTracker:
     def from_dict(cls, d: Dict[str, Any]) -> 'EffectivenessTracker':
         tracker = cls()
         restored = {}
+        valid_actions = {a.name for a in InterventionAction}
+        valid_modes = {m.name for m in FailureMode}
+        valid_modes.add("UNKNOWN")
+        
         for k, v in d.get("outcomes", {}).items():
             parts = k.split("|")
             if len(parts) == 2:
                 # Correctly formed key — restore as tuple
                 restored[tuple(parts)] = v
             else:
-                # Malformed or legacy key — skip silently to avoid broken lookups
-                pass
+                # Fallback for legacy keys joined by "_"
+                matched = False
+                for action in valid_actions:
+                    for mode in valid_modes:
+                        if k == f"{action}_{mode}":
+                            restored[(action, mode)] = v
+                            matched = True
+                            break
+                    if matched:
+                        break
+                
+                if not matched:
+                    # Malformed or un-parseable legacy key
+                    pass
         tracker._outcomes = defaultdict(
             lambda: {"successes": 0, "total": 0},
             restored,
