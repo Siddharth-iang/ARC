@@ -4,7 +4,7 @@
 
 ### Autonomous Recovery Controller for Neural Network Training
 
-_Real-time fault tolerance that monitors, predicts, and recovers from training failures — automatically._
+_Real-time fault tolerance that monitors, predicts, and recovers from training failures - automatically._
 
 <br>
 
@@ -36,9 +36,9 @@ Training neural networks is fragile. A single NaN gradient, an OOM spike, or an 
 
 **ARC eliminates this entirely.** It wraps your training loop with an autonomous controller that:
 
-1. **Monitors** — Tracks multi-signal telemetry (loss trajectory, gradient norms, weight health, optimizer state integrity)
-2. **Predicts** — Uses signal-based classifiers to detect failures before they become irreversible
-3. **Recovers** — Automatically rolls back to the last healthy checkpoint and applies corrective measures
+1. **Monitors** - Tracks multi-signal telemetry (loss trajectory, gradient norms, weight health, optimizer state integrity)
+2. **Predicts** - Uses signal-based classifiers to detect failures before they become irreversible
+3. **Recovers** - Automatically rolls back to the last healthy checkpoint and applies corrective measures
 
 You keep training. ARC keeps it alive.
 
@@ -178,19 +178,51 @@ git clone https://github.com/a-kaushik2209/ARC.git
 cd ARC
 ```
 
-### 2. Create a Development Branch
+---
+
+### 2. Open or Discuss an Issue First
+
+Before starting implementation work, contributors are expected to:
+
+- Open a new issue describing the proposed feature, improvement or bug fix
+- Participate in issue discussions if clarification is required
+- Wait for the issue to be assigned before beginning work
+
+Pull requests raised without prior discussion or assignment may be closed if the contribution does not align with the current roadmap, architecture direction or active development priorities.
+
+This process helps avoid duplicated work and keeps contributions coordinated across the project.
+
+---
+
+### 3. Create a Development Branch
 
 ```bash
 git checkout -b feature/your-feature-name
 ```
 
-### 3. Install Dependencies
+Use clear and descriptive branch names.
+
+Examples:
+
+```text
+feature/failure-prediction-upgrade
+fix/checkpoint-memory-leak
+docs/installation-guide-update
+```
+
+---
+
+### 4. Install Dependencies
 
 ```bash
 pip install -e .
 ```
 
-### 4. Make Your Changes
+Install all required dependencies before starting development to ensure local testing consistency.
+
+---
+
+### 5. Make Your Changes
 
 Please keep contributions:
 
@@ -199,31 +231,48 @@ Please keep contributions:
 - Consistent with the existing architecture
 - Focused on a single feature or fix
 
+For larger changes, keep commits logically separated wherever possible.
+
 ---
 
-### 5. Commit Clearly
+### 6. Commit Clearly
 
 ```bash
 git commit -m "Add: short feature description"
 ```
 
+Prefer concise and meaningful commit messages.
+
+Examples:
+
+```text
+Add: gradient anomaly recovery module
+Fix: checkpoint rollback edge case
+Docs: improve installation instructions
+```
+
 ---
 
-### 6. Push Your Branch
+### 7. Push Your Branch
 
 ```bash
 git push origin feature/your-feature-name
 ```
 
+Ensure your branch is up to date with the latest repository changes before opening a pull request.
+
 ---
 
-### 7. Open a Pull Request
+### 8. Open a Pull Request
 
 Please include:
 
-- Clear explanation of the contribution
+- A clear explanation of the contribution
 - Motivation behind the change
-- Relevant benchmarks or screenshots if applicable
+- Relevant benchmarks, logs or screenshots if applicable
+- References to the related issue
+
+PRs should remain focused and avoid unrelated modifications.
 
 ---
 
@@ -234,8 +283,11 @@ To maintain repository quality:
 - Keep PRs focused and minimal
 - Avoid unrelated refactors
 - Ensure code executes correctly before submission
-- Add comments/docstrings where appropriate
+- Add comments and docstrings where appropriate
+- Maintain compatibility with the existing architecture
 - Discuss major architectural changes before implementation
+
+Submissions that significantly change project direction without prior discussion may be deferred or closed.
 
 ---
 
@@ -247,6 +299,7 @@ When opening an issue, include:
 - Expected behaviour
 - Steps to reproduce
 - Relevant logs or screenshots
+- Environment details if applicable
 
 Bug reports with reproducible examples are highly appreciated.
 
@@ -273,6 +326,17 @@ Contributions aligned with these principles are strongly encouraged.
 [![Discord](https://img.shields.io/badge/ARC%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/E6UvPWC8DW)
 
 </div>
+
+The Discord server is the primary hub for:
+
+- Contributor discussions
+- Collaboration
+- Development updates
+- Research discussions
+- Feature proposals
+- Bug reporting and debugging support
+
+Contributors are encouraged to participate in discussions before beginning larger implementations or architectural changes.
 
 ---
 
