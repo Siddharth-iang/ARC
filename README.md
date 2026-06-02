@@ -67,13 +67,13 @@ pip install -e .
 ```python
 from arc import ArcV2
 
-controller = ArcV2(model, optimizer)
+controller = ArcV2.auto(model, optimizer)
 
 for batch in dataloader:
     loss = model(batch)
     action = controller.step(loss)
 
-    if not action.get('rolled_back', False) and action.get('recommendation') != 'rollback':
+    if action.get('recommendation') != 'rollback':
         loss.backward()
         optimizer.step()
 ```
