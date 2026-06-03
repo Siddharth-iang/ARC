@@ -462,6 +462,10 @@ class AdaptiveCheckpointer:
                 f"It may have been evicted from the deque."
             )
 
+        # If base is also incremental, resolve it recursively first
+        if base_checkpoint.get('is_incremental', False):
+            base_checkpoint = self._resolve_incremental(base_checkpoint)
+
         full_state = base_checkpoint['model'].copy()
         for k, v in checkpoint['delta'].items():
             full_state[k] = v
