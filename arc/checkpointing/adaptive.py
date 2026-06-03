@@ -93,6 +93,7 @@ class AdaptiveCheckpointer:
         self.current_strategy: Optional[CheckpointStrategy] = None
         self._last_full_state: Optional[Dict[str, torch.Tensor]] = None
         self._next_checkpoint_id: int = 0
+        self._last_full_checkpoint_id: Optional[int] = None
 
         self.model_size_bytes = self._calculate_model_size()
         self.optimizer_size_bytes = self._calculate_optimizer_size()
@@ -205,6 +206,10 @@ class AdaptiveCheckpointer:
             for v in checkpoint['model'].values()
         )
 
+        checkpoint['checkpoint_id'] = self._next_checkpoint_id
+        self._last_full_checkpoint_id = self._next_checkpoint_id
+        self._next_checkpoint_id += 1
+
         self.checkpoints.append(checkpoint)
         self._last_full_state = checkpoint['model']
 
@@ -295,7 +300,7 @@ class AdaptiveCheckpointer:
 
         checkpoint = {
             'delta': delta,
-            'base_id': self.checkpoints[-1].get('checkpoint_id') if self.checkpoints else None,
+            'base_id': self._last_full_checkpoint_id,
             'checkpoint_id': self._next_checkpoint_id,
             'step': self.step,
             'is_incremental': True,
@@ -461,10 +466,6 @@ class AdaptiveCheckpointer:
                 f"Base checkpoint with id={checkpoint.get('base_id')} not found. "
                 f"It may have been evicted from the deque."
             )
-
-        # If base is also incremental, resolve it recursively first
-        if base_checkpoint.get('is_incremental', False):
-            base_checkpoint = self._resolve_incremental(base_checkpoint)
 
         full_state = base_checkpoint['model'].copy()
         for k, v in checkpoint['delta'].items():
