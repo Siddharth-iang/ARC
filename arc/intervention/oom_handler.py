@@ -265,7 +265,6 @@ class OOMRecoveryHandler:
         self.state.failed_recoveries += 1
         return False, current_batch
 
-    # AFTER
     def safe_forward(
         self,
         forward_fn: Callable[[Any], torch.Tensor],
