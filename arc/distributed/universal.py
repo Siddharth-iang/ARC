@@ -258,13 +258,22 @@ class UniversalDistributedRollback:
         opt_state = {}
         for k, v in checkpoint['optimizer'].items():
             opt_state[k] = {
-                k2: v2.to(device=self.state.device, dtype=torch.float32)
-                    if isinstance(v2, torch.Tensor) else v2
+                k2: (
+                    v2.to(
+                        device=self.state.device,
+                        dtype=torch.float32 if v2.is_floating_point() else v2.dtype,
+                    )
+                    if isinstance(v2, torch.Tensor)
+                    else v2
+                )
                 for k2, v2 in v.items()
             }
         optimizer_state_dict = {
             'state': opt_state,
-            'param_groups': self.optimizer.state_dict()['param_groups'],
+            'param_groups': checkpoint.get(
+                'optimizer_param_groups',
+                self.optimizer.state_dict()['param_groups']  # fallback for old checkpoints
+            ),
         }
         self.optimizer.load_state_dict(optimizer_state_dict)
 
