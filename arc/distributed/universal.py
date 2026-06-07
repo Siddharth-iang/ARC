@@ -281,6 +281,9 @@ class UniversalDistributedRollback:
         if 'cuda' in checkpoint['rng'] and torch.cuda.is_available():
             torch.cuda.set_rng_state(checkpoint['rng']['cuda'])
 
+        # Reset loss history so pre-rollback spikes don't re-trigger detection
+        self._loss_history.clear()
+
         return checkpoint['step']
 
     def _reduce_learning_rate(self):
