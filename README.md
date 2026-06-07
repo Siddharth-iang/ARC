@@ -73,7 +73,7 @@ for batch in dataloader:
     loss = model(batch)
     action = controller.step(loss)
 
-    if action.get('recommendation') != 'rollback':
+    if not action.rolled_back:
         loss.backward()
         optimizer.step()
 ```
